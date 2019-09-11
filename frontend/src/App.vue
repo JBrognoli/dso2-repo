@@ -1,31 +1,43 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app>
+    <v-app-bar app>
+      <v-toolbar-title class="headline text-uppercase">
+        <span>Free</span>
+        <span class="font-weight-light">Market</span>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn text href="https://github.com/vuetifyjs/vuetify/releases/latest" target="_blank">
+        <span class="mr-2">Logout</span>
+        <v-icon>mdi-logout</v-icon>
+      </v-btn>
+    </v-app-bar>
+
+    <v-img
+      src="./assets/dollars.jpg"
+      lazy-src="https://picsum.photos/id/11/10/6"
+      aspect-ratio="1"
+      class="grey lighten-2 imageOpacity"
+      max-height="100vh"
+      max-width="100vw"
+    >
+      <v-content>
+        <router-view />
+      </v-content>
+    </v-img>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
+<script>
+export default {
+  name: "App",
+  data: () => ({
+    //
+  })
+};
+</script>
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+<style scoped>
+.imageOpacity {
+  opacity: 1;
 }
 </style>
