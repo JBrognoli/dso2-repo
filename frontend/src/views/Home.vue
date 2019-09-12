@@ -1,15 +1,15 @@
 <template>
   <v-container>
-    <Login />
+      <Register/>
   </v-container>
 </template>
 
 <script>
-import Login from "../components/Login";
+  import Register from "../components/Register";
 
-export default {
-  components: {
-    Login
-  }
-};
+  export default {
+    components: {
+      Register
+    }
+  };
 </script>

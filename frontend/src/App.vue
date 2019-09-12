@@ -1,16 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Free</span>
-        <span class="font-weight-light">Market</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn text href="https://github.com/vuetifyjs/vuetify/releases/latest" target="_blank">
-        <span class="mr-2">Logout</span>
-        <v-icon>mdi-logout</v-icon>
-      </v-btn>
-    </v-app-bar>
+    <TheToolbar />
 
     <v-img
       src="./assets/dollars.jpg"
@@ -24,14 +14,27 @@
         <router-view />
       </v-content>
     </v-img>
+    <BaseSnackbar />
   </v-app>
 </template>
 
 <script>
+  import TheToolbar from './components/TheToolbar'
+  import BaseSnackbar from './components/BaseSnackbar'
+
 export default {
   name: "App",
+  components: {
+    TheToolbar,
+    BaseSnackbar
+  },
   data: () => ({
-    //
+    login: {
+      email: '',
+      password: ''
+    },
+    showPassword: false,
+    loginFormValid: '',
   })
 };
 </script>
