@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-snackbar v-model="baseSnackbar.open" timeout="3500" right>
+    <v-snackbar v-model="baseSnackbar.open" :timeout="3500" right>
       {{ baseSnackbar.text }}
       <v-btn
         color="white"
