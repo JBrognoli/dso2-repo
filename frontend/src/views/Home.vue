@@ -4,7 +4,7 @@
       <Carousel></Carousel>
     </v-layout>
     <v-layout class="mt-5">
-      <BaseCard></BaseCard>
+      <!-- <BaseCard></BaseCard> -->
     </v-layout>
   </v-container>
 </template>

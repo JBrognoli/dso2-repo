@@ -6,12 +6,11 @@ const UserSchema = new Schema({
   email: {
     type: Schema.Types.String,
     required: 'Email is requerid',
-    unique: true
+    // unique: true
   },
   password: {
     type: Schema.Types.String,
     required: 'Password is required',
-    unique: true
   },
   name: {
     type: Schema.Types.String,

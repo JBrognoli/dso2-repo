@@ -32,6 +32,7 @@
                   <v-layout column>
                     <span class="black--text caption mb-2">Novo - 50 unidades</span>
                     <span class="black--text title mb-4" style="line-height: 1">{{item.name}}</span>
+                    <span class="black--text font-weight-medium mb-3">{{item.description}}</span>
                     <span class="black--text font-weight-medium mb-3">R${{item.price}}</span>
                     <span class="black--text font-weight-bold mb-2">
                       <v-icon color="black" class="mr-1">mdi-credit-card-outline</v-icon>
@@ -66,7 +67,6 @@ export default {
         id: "1",
         name: "Product name 1",
         description: "Product description 1",
-        owner: "Product owner 1",
         publishedAt: "13/09/2019",
         price: "399.99",
         image: "https://picsum.photos/id/11/500/300"
@@ -77,24 +77,11 @@ export default {
         id: "2",
         name: "Product name 2",
         description: "Product description 2",
-        owner: "Product owner 2",
         publishedAt: "12/09/2019",
         price: "575.00",
         image:
           "https://cdn0.tnwcdn.com/wp-content/blogs.dir/1/files/2018/05/Wyvern-programming-languages-in-one.jpg"
       },
-      {
-        sellerName: "Alfeu Gonçalves",
-        sellerPhoto: "",
-        id: "3",
-        name: "Product name 3",
-        description: "Product description 3",
-        owner: "Product owner 3",
-        publishedAt: "11/09/2019",
-        price: "1051.50",
-        image:
-          "https://a-static.mlcdn.com.br/618x463/kit-imperio-3x-cervejas-imperio-gold-puro-malte-210ml-e-3x-cerveja-imperio-lager-puro-malte-275ml-cervejaria-cidade-imperial/emporiumgourmet2/1348/d6dd2c3eb7275b4fb4de744908e36ec7.jpg"
-      }
     ]
   })
 };
