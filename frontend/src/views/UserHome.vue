@@ -138,8 +138,15 @@
         this.dialog = true;
       },
 
-      deleteItem(item) {
+      async deleteItem(item) {
         const index = this.products.indexOf(item);
+        console.log('item', item)
+        try {
+          let ret = await User.deleteItem(item._id);
+          console.log('retDelete', ret)
+        } catch(e) {
+          console.log(e);
+        }
         confirm("Are you sure you want to delete this product?") &&
         this.products.splice(index, 1);
       },

@@ -38,4 +38,8 @@ export default {
     return ret.data;
   },
 
+  async deleteItem(id) {
+    let ret = await http.delete(`/product/${id}`);
+    return ret.data;
+  }
 }
