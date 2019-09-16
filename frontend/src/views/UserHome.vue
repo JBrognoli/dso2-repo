@@ -40,7 +40,7 @@
                   </v-col>
                   <v-col cols="12" sm="12" md="12">
                     <v-text-field
-                      v-model="editedItem.imageURL"
+                      v-model="editedItem.image"
                       label="Image URL"
                       prepend-icon="mdi-file-image"
                     ></v-text-field>
@@ -86,7 +86,7 @@
         },
         {text: "Price", value: "price", align: "left"},
         {text: "Description", value: "description"},
-        {text: "Image URL", value: "imageURL"},
+        // {text: "Image URL", value: "image"},
         {text: "Actions", value: "action", sortable: false}
       ],
       products: [],
@@ -95,7 +95,7 @@
         name: "",
         price: "",
         description: "",
-        imageURL: ""
+        image: ""
       },
       defaultItem: {
         name: "",

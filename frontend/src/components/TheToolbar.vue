@@ -9,14 +9,14 @@
       <v-spacer></v-spacer>
     </v-btn>
     <v-spacer></v-spacer>
-    <v-text-field
+    <!-- <v-text-field
       append-icon="mdi-microphone"
       flat
       hide-details
       label="Search"
       prepend-inner-icon="mdi-magnify"
       solo-inverted
-    ></v-text-field>
+    ></v-text-field> -->
     <v-spacer></v-spacer>
     <v-btn text v-if="logged">
       <span class="mr-2" @click="handleLogout">Logout</span>

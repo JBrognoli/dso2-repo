@@ -78,6 +78,7 @@ module.exports = {
 
   update(req, res) {
     const { id } = req.params;
+    console.log(req.body);
     Product.findByIdAndUpdate(id, req.body, { lean: true, new: true }, function(
       err,
       product
@@ -85,6 +86,7 @@ module.exports = {
       if (err) {
         console.log("err", err);
       } else {
+        console.log(product)
         return res.json(product);
       }
     });

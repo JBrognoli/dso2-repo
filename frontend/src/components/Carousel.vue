@@ -18,7 +18,7 @@
             <v-flex xs9 md7 sm5 class="flex-grow-1">
               <v-layout class="align-center justify-center">
                 <v-img
-                  src="https://images.unsplash.com/photo-1556740714-a8395b3bf30f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
+                  :src="item.image || 'https://images.unsplash.com/photo-1556740714-a8395b3bf30f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80'"
                   aspect-ratio="1"
                   class="grey lighten-2"
                   max-width="500"
@@ -33,10 +33,10 @@
                     <span class="black--text caption mb-2">Novo - 50 unidades</span>
                     <span class="black--text title mb-4" style="line-height: 1">{{item.name}}</span>
                     <span class="black--text font-weight-medium mb-3">{{item.description}}</span>
-                    <span class="black--text font-weight-medium mb-3">R${{item.price}}</span>
+                    <span class="black--text font-weight-medium mb-3">R$ {{item.price}}</span>
                     <span class="black--text font-weight-bold mb-2">
                       <v-icon color="black" class="mr-1">mdi-credit-card-outline</v-icon>
-                      12x {{Math.round((item.price/12) * 100) / 100}} sem juros
+                      12 x R$ {{Math.round((item.price/12) * 100) / 100}} sem juros
                     </span>
                     <span class="black--text font-weight-bold">
                       <v-icon color="black" class="mr-2">mdi-truck-delivery</v-icon>Frete grátis
