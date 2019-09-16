@@ -6,7 +6,7 @@ module.exports = {
 
     const emailAlreadyUsed = await User.findOne({ email: email });
     if (emailAlreadyUsed) {
-      return res.json({userExists, "success": true});
+      return res.json({userExists: true, "success": true});
     }
 
     User.create({ email, password }, function(err, user) {

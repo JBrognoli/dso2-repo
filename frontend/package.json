@@ -11,10 +11,10 @@
     "core-js": "^2.6.5",
     "localforage": "^1.7.3",
     "vue": "^2.6.10",
+    "vue-localforage": "^0.2.5",
     "vue-router": "^3.0.3",
     "vuetify": "^2.0.0",
-    "vuex": "^3.0.1",
-    "vue-localforage": "^0.2.5"
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.11.0",

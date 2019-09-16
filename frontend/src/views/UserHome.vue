@@ -119,8 +119,8 @@
     async created() {
       const userInfo = await this.$getItem('userInfo');
       const user = {
-        email: userInfo.email,
-        password: userInfo.password
+        email: userInfo ? userInfo.email : "",
+        password: userInfo ? userInfo.password : ""
       }
       let ret = await Open.logIn(user);
       this.$setItem('userInfo', ret.user);

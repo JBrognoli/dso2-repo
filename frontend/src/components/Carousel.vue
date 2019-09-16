@@ -89,7 +89,7 @@ export default {
   async created() {
     try {
       let ret = await User.readAllProducts();
-      this.items = ret;
+      this.items = ret.slice(-3);
       console.log('ret carrouselreadprods', ret);
     } catch (e) {
       console.log('errr', e)

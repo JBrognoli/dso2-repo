@@ -54,7 +54,11 @@
     },
     async created() {
       let userInfo = await this.$getItem('userInfo');
-      this.userName = userInfo.email
+      if (userInfo) {
+        this.userName = userInfo.email
+      } else {
+        this.userName = "usuario@email.com"
+      }
     }
   };
 </script>

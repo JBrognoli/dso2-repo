@@ -4,27 +4,27 @@
       <Carousel></Carousel>
     </v-layout>
     <v-layout class="mt-5 align-center justify-center">
-      <v-btn class="ml-3" fab>
+      <!-- <v-btn class="ml-3" fab>
         <v-icon dark x-large>mdi-arrow-left-bold</v-icon>
-      </v-btn>
+      </v-btn> -->
       <v-flex class="mt-5">
-        <v-layout justify-space-around>
-          <ul v-for="(baseCard, key) in baseCards" :key="key" class="pa-0">
+        <v-layout justify-space-around wrap>
+          <ul v-for="(baseCard, key) in baseCards" :key="key" class="pa-0 pt-3">
             <BaseCard
               :name="baseCard.name"
               :description="baseCard.description"
               :publishedAt="baseCard.publishedAt"
               :price="baseCard.price"
-              :image="baseCard.image"
+              image="https://images.unsplash.com/photo-1556740714-a8395b3bf30f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
               :sellerName="baseCard.sellerName"
               :sellerPhoto="baseCard.sellerPhoto"
             ></BaseCard>
           </ul>
         </v-layout>
       </v-flex>
-      <v-btn class="ml-3" fab>
+      <!-- <v-btn class="ml-3" fab>
         <v-icon dark x-large>mdi-arrow-right-bold</v-icon>
-      </v-btn>
+      </v-btn> -->
     </v-layout>
   </v-container>
 </template>
@@ -82,6 +82,9 @@ export default {
     try {
       let ret = await Open.readAllUsers();
       console.log('ret readAll', ret);
+
+      let r = await User.readAllProducts();
+      this.baseCards = r;
     } catch (e) {
       console.log('error readAll', e)
     }
