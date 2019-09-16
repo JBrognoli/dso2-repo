@@ -6,6 +6,7 @@ let cors = require('cors');
 const { port } = require('./barrier')
 
 let user = require('./routes/user')
+let product = require('./routes/product')
 let middlewares = express();
 
 middlewares.use(logger('dev'));
@@ -15,6 +16,7 @@ middlewares.use(express.static(path.join(__dirname, 'dist')));
 middlewares.use(cors());
 middlewares.use('/users', express.static(path.join(__dirname, 'dist')));
 middlewares.use('/user', user);
+middlewares.use('/product', product)
 
 // catch 404 and forward to error handler
 middlewares.use(function(req, res, next) {
@@ -34,15 +36,16 @@ middlewares.use(function(err, req, res, next) {
   res.render('error');
 });
 
-const config = {
-  promiseLibrary: require('bluebird'),
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}
 
 let mongoose = require('mongoose');
+
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+mongoose.set('useUnifiedTopology', true);
+
 mongoose.Promise = require('bluebird');
-mongoose.connect('mongodb://localhost/freemarketDB', config)
+mongoose.connect('mongodb://localhost/freemarketDB')
 .then(() =>  console.log(`connection succesful ${port}`))
 .catch((err) => console.error(err));
 

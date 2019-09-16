@@ -6,7 +6,7 @@ const UserSchema = new Schema({
   email: {
     type: Schema.Types.String,
     required: 'Email is requerid',
-    // unique: true
+    unique: true
   },
   password: {
     type: Schema.Types.String,
@@ -21,5 +21,11 @@ const UserSchema = new Schema({
   profilePhoto: {
     type: Schema.Types.String,
   },
+  products: {
+    product: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Product'
+    }],
+  }
 });
 module.exports = mongoose.model('User', UserSchema);
