@@ -6,13 +6,28 @@ const UPDATE_DRAWER = (state) => {
   state.navDrawer = !state.navDrawer;
 };
 
-const UPDATE_LOGGED = (state) => {
-  state.logged = !state.logged;
-}
+const UPDATE_STATUS = (state, payload) => {
+  state.logged = payload;
+};
+
+const UPDATE_LOGIN = (state) => {
+  state.logged = true;
+};
+
+const UPDATE_LOGOUT = (state) => {
+  state.logged = false;
+};
+
+const UPDATE_USER = (state, payload) => {
+  state.userInfo = payload;
+};
 
 
 export {
   UPDATE_BASE_SNACKBAR,
   UPDATE_DRAWER,
-  UPDATE_LOGGED
+  UPDATE_LOGOUT,
+  UPDATE_LOGIN,
+  UPDATE_STATUS,
+  UPDATE_USER
 }

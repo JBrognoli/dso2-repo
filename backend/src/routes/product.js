@@ -7,8 +7,11 @@ const routes = express.Router();
 
 routes.post('/:id', ProductController.create);
 routes.get('/', ProductController.readAll);
-// routes.get('/:id', ProductController.readById);
+routes.get('/:id', ProductController.readById);
 routes.put('/:id', ProductController.update);
-routes.delete('/:id', ProductController.deleteById)
+routes.delete('/:id', ProductController.deleteById);
+
+routes.post('/buy/:id', ProductController.buy);
+
 
 module.exports = routes;

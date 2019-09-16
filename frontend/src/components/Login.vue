@@ -76,6 +76,7 @@
 
 <script>
 import {mapMutations} from 'vuex';
+import Open from '../services/open';
 
 export default {
   name: "Login",
@@ -85,8 +86,8 @@ export default {
     menu: false,
     login: {
       form: {
-        email: "",
-        password: ""
+        email: "teste@hotmail.com",
+        password: "123"
       },
       showPassword: false,
       loginFormValid: ""
@@ -102,22 +103,47 @@ export default {
     }
   }),
   methods: {
-    ...mapMutations("user", ["UPDATE_BASE_SNACKBAR", 'UPDATE_LOGGED']),
-    handleRegister() {
-      this.UPDATE_BASE_SNACKBAR({
-        open: true,
-        text: "Usuário criado com sucesso"
-      });
-      this.menu = false;
+    ...mapMutations("user", ["UPDATE_BASE_SNACKBAR", 'UPDATE_LOGIN', 'UPDATE_USER']),
+    async handleRegister() {
+      try {
+        let ret = await Open.createUser(this.register.form);
+        if(ret.sucess) {
+          this.UPDATE_BASE_SNACKBAR({
+            open: true,
+            text: "Usuário criado com sucesso"
+          });
+          this.menu = false;
+        } else {
+          this.UPDATE_BASE_SNACKBAR({
+            open: true,
+            text: "Erro, email ou senha incorretos."
+          });
+        }
+      } catch (e) {
+        console.log('error', e)
+      }
     },
-    handleLogin() {
-      this.UPDATE_LOGGED();
-      this.UPDATE_BASE_SNACKBAR({
-        open: true,
-        text: "Usuário logado com sucesso"
-      });
-      this.menu = false;
-      this.$router.replace('/userHome')
+    async handleLogin() {
+      try {
+        let ret = await Open.logIn(this.login.form);
+        console.log(ret)
+        if(ret.success) {
+          this.$setItem('userInfo', ret.user)
+          this.$setItem('logged', true)
+          this.UPDATE_LOGIN();
+          this.UPDATE_USER(ret.data);
+          this.UPDATE_BASE_SNACKBAR({
+            open: true,
+            text: "Usuário logado com sucesso"
+          });
+          this.menu = false;
+          this.$router.push('/userHome')
+        } else {
+          console.log('ret error', ret)
+        }
+      } catch (e) {
+        console.log('error', e)
+      }
     }
   }
 };

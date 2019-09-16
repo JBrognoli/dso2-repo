@@ -21,11 +21,19 @@ const UserSchema = new Schema({
   profilePhoto: {
     type: Schema.Types.String,
   },
+  phone: {
+    type: Schema.Types.String
+  },
   products: {
-    product: [{
+    type: [{
       type: Schema.Types.ObjectId,
       ref: 'Product'
     }],
   }
 });
+
+UserSchema.pre('findOne', function () {
+  this.populate('products');
+});
+
 module.exports = mongoose.model('User', UserSchema);

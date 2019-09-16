@@ -7,7 +7,7 @@
       <v-btn class="ml-3" fab>
         <v-icon dark x-large>mdi-arrow-left-bold</v-icon>
       </v-btn>
-      <v-flex>
+      <v-flex class="mt-5">
         <v-layout justify-space-around>
           <ul v-for="(baseCard, key) in baseCards" :key="key" class="pa-0">
             <BaseCard
@@ -32,6 +32,8 @@
 <script>
 import Carousel from "../components/Carousel";
 import BaseCard from "../components/BaseCard";
+import Open from '../services/open'
+import User from '../services/user'
 
 export default {
   components: {
@@ -75,6 +77,20 @@ export default {
           "https://cdn0.tnwcdn.com/wp-content/blogs.dir/1/files/2018/05/Wyvern-programming-languages-in-one.jpg"
       }
     ]
-  })
+  }),
+  async created() {
+    try {
+      let ret = await Open.readAllUsers();
+      console.log('ret readAll', ret);
+    } catch (e) {
+      console.log('error readAll', e)
+    }
+    // try {
+    //   let ret = await User.readAllProducts();
+    //   console.log('ret readPRODUCS', ret);
+    // } catch (e) {
+    //   console.log('errr', e)
+    // }
+  }
 };
 </script>

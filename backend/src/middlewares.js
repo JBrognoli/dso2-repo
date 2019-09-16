@@ -16,7 +16,7 @@ middlewares.use(express.static(path.join(__dirname, 'dist')));
 middlewares.use(cors());
 middlewares.use('/users', express.static(path.join(__dirname, 'dist')));
 middlewares.use('/user', user);
-middlewares.use('/product', product)
+middlewares.use('/product', product);
 
 // catch 404 and forward to error handler
 middlewares.use(function(req, res, next) {

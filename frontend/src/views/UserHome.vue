@@ -6,7 +6,7 @@
         <v-divider class="mx-4" inset vertical></v-divider>
         <div class="flex-grow-1"></div>
         <v-dialog v-model="dialog" max-width="500px">
-          <template v-slot:activator="{ on }" >
+          <template v-slot:activator="{ on }">
             <v-btn dark class="mx-y" v-on="on">New Product</v-btn>
           </template>
           <v-card>
@@ -63,112 +63,120 @@
       <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
     </template>
     <template v-slot:no-data>
-      <v-btn color="primary" @click="initialize">Reset</v-btn>
+      <v-btn style="background-color: #212121" @click="initialize"><span class="white--text">Reset</span></v-btn>
     </template>
   </v-data-table>
 </template>
 
 <script>
-export default {
-  name: "UserHome",
-  components: {},
-  data: () => ({
-    dialog: false,
-    headers: [
-      {
-        text: "Product name",
-        align: "left",
-        sortable: true,
-        value: "name"
+  import User from '../services/user'
+  import Open from '../services/open'
+
+  export default {
+    name: "UserHome",
+    components: {},
+    data: () => ({
+      dialog: false,
+      headers: [
+        {
+          text: "Product name",
+          align: "left",
+          sortable: true,
+          value: "name"
+        },
+        {text: "Price", value: "price", align: "left"},
+        {text: "Description", value: "description"},
+        {text: "Image URL", value: "imageURL"},
+        {text: "Actions", value: "action", sortable: false}
+      ],
+      products: [],
+      editedIndex: -1,
+      editedItem: {
+        name: "",
+        price: "",
+        description: "",
+        imageURL: ""
       },
-      { text: "Price", value: "price", align: "left" },
-      { text: "Description", value: "description" },
-      { text: "Image URL", value: "imageURL"},
-      { text: "Actions", value: "action", sortable: false }
-    ],
-    products: [],
-    editedIndex: -1,
-    editedItem: {
-      name: "",
-      price: "",
-      description: "",
-      imageURL: ""
-    },
-    defaultItem: {
-      name: "",
-      price: "",
-      description: "",
-      imageURL: ""
-    }
-  }),
-  computed: {
-    formTitle() {
-      return this.editedIndex === -1 ? "New Product" : "Edit Product";
-    }
-  },
-
-  watch: {
-    dialog(val) {
-      val || this.close();
-    }
-  },
-
-  created() {
-    this.initialize();
-  },
-
-  methods: {
-    initialize() {
-      this.products = [
-        {
-          name: "Pacote de viagem",
-          price: "150.00",
-          description: "Viagem para a disney com tudo pago.",
-          imageURL: ""
-        },
-        {
-          name: "SSD Sandisk 240gb",
-          price: "237.33",
-          description: "HD SSD 240GB para Notebooks",
-          imageURL: ""
-        },
-        {
-          name: "Curso Rocket Seat",
-          price: "5060.00",
-          description: "Introdução a fullstack React + Node + React Native",
-          imageURL: ""
-        }
-      ];
-    },
-
-    editItem(item) {
-      this.editedIndex = this.products.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialog = true;
-    },
-
-    deleteItem(item) {
-      const index = this.products.indexOf(item);
-      confirm("Are you sure you want to delete this product?") &&
-        this.products.splice(index, 1);
-    },
-
-    close() {
-      this.dialog = false;
-      setTimeout(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      }, 300);
-    },
-
-    save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.products[this.editedIndex], this.editedItem);
-      } else {
-        this.products.push(this.editedItem);
+      defaultItem: {
+        name: "",
+        price: "",
+        description: "",
+        imageURL: ""
       }
-      this.close();
+    }),
+    computed: {
+      formTitle() {
+        return this.editedIndex === -1 ? "New Product" : "Edit Product";
+      }
+    },
+
+    watch: {
+      dialog(val) {
+        val || this.close();
+      }
+    },
+
+    async created() {
+      const userInfo = await this.$getItem('userInfo');
+      const user = {
+        email: userInfo.email,
+        password: userInfo.password
+      }
+      let ret = await Open.logIn(user);
+      this.$setItem('userInfo', ret.user);
+      this.products = ret.user.products;
+    },
+
+    methods: {
+      initialize(ret) {
+        this.products = ret;
+      },
+
+      editItem(item) {
+        this.editedIndex = this.products.indexOf(item);
+        this.editedItem = Object.assign({}, item);
+        this.dialog = true;
+      },
+
+      deleteItem(item) {
+        const index = this.products.indexOf(item);
+        confirm("Are you sure you want to delete this product?") &&
+        this.products.splice(index, 1);
+      },
+
+      close() {
+        this.dialog = false;
+        setTimeout(() => {
+          this.editedItem = Object.assign({}, this.defaultItem);
+          this.editedIndex = -1;
+        }, 300);
+      },
+
+      async save() {
+        if (this.editedIndex > -1) {
+          Object.assign(this.products[this.editedIndex], this.editedItem);
+          console.log(this.editedItem);
+          const id = this.editedItem._id;
+          try {
+            let ret = await User.updateProduct(id, this.editedItem);
+            console.log('ret', ret);
+          } catch (e) {
+            console.log(e)
+          }
+        } else {
+          console.log(this.editedItem);
+          const userInfo = await this.$getItem('userInfo');
+          const id = userInfo._id;
+          try {
+            let ret = await User.createdProduct(id, this.editedItem);
+            console.log('retProd', ret)
+            this.products.push(this.editedItem);
+          } catch (e) {
+            console.log('eerrr', e);
+          }
+        }
+        this.close();
+      }
     }
-  }
-};
+  };
 </script>

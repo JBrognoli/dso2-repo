@@ -2,14 +2,14 @@
   <v-flex >
     <v-card width="60%" elevation="10" class="mx-auto">
       <v-carousel :cycle="cycle" :show-arrows="false" height="450px">
-        <v-carousel-item v-for="(item, index) in items" :key="index">
+        <v-carousel-item v-for="item in items" :key="item._id">
           <v-list two-line>
             <v-list-item>
               <v-list-item-avatar>
-                <v-img :src="item.sellerPhoto" />
+                <v-img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxc36HkPwSHSLpwROxkkDmhVtewIUD84Jd1WjTgiXSeInRIdFi" />
               </v-list-item-avatar>
               <v-list-item-content>
-                <v-list-item-title>{{item.sellerName}}</v-list-item-title>
+                <v-list-item-title>Vendedor Name</v-list-item-title>
                 <v-list-item-subtitle>Seller</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
@@ -18,7 +18,7 @@
             <v-flex xs9 md7 sm5 class="flex-grow-1">
               <v-layout class="align-center justify-center">
                 <v-img
-                  :src="item.image"
+                  src="https://images.unsplash.com/photo-1556740714-a8395b3bf30f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
                   aspect-ratio="1"
                   class="grey lighten-2"
                   max-width="500"
@@ -44,7 +44,7 @@
                   </v-layout>
                 </v-card-text>
                 <v-card-actions>
-                  <v-btn block>Comprar</v-btn>
+                  <v-btn block @click="buyItem(item._id)">Comprar</v-btn>
                 </v-card-actions>
               </v-card>
             </v-flex>
@@ -55,6 +55,8 @@
   </v-flex>
 </template>
 <script>
+  import User from '../services/user'
+
 export default {
   name: "Carrousel",
   data: () => ({
@@ -83,7 +85,28 @@ export default {
           "https://cdn0.tnwcdn.com/wp-content/blogs.dir/1/files/2018/05/Wyvern-programming-languages-in-one.jpg"
       },
     ]
-  })
+  }),
+  async created() {
+    try {
+      let ret = await User.readAllProducts();
+      this.items = ret;
+      console.log('ret carrouselreadprods', ret);
+    } catch (e) {
+      console.log('errr', e)
+    }
+  },
+  methods: {
+    async buyItem(itemId) {
+      const userInfo = await this.$getItem('userInfo');
+      const userId = userInfo._id;
+      try {
+        let ret = await User.buyItem(userId, itemId);
+        console.log('ret buy', ret);
+      } catch (e) {
+        console.log('err', e);
+      }
+    }
+  }
 };
 </script>
 

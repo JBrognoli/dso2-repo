@@ -18,17 +18,18 @@
       solo-inverted
     ></v-text-field>
     <v-spacer></v-spacer>
-    <v-btn text>
+    <v-btn text v-if="logged">
       <span class="mr-2" @click="handleLogout">Logout</span>
       <v-icon>mdi-logout</v-icon>
     </v-btn>
-    <Login />
+    <Login v-if="!logged"/>
   </v-app-bar>
 </template>
 
 <script>
 import Login from "./Login";
 import { mapState, mapMutations } from "vuex";
+import User from '../services/user'
 
 export default {
   name: "TheToolbar",
@@ -42,16 +43,34 @@ export default {
     }
   },
   methods: {
-    ...mapMutations("user", ["UPDATE_DRAWER", "UPDATE_LOGGED"]),
+    ...mapMutations("user", ["UPDATE_DRAWER", "UPDATE_LOGOUT", 'UPDATE_STATUS', 'UPDATE_USER']),
     handleLogo() {
       this.$router.replace("/");
     },
     handleDrawer() {
       this.UPDATE_DRAWER();
     },
-    handleLogout() {
-      this.UPDATE_LOGGED();
+    async handleLogout() {
+      const user = this.$getItem('userInfo');
+      const id = user._id;
+      try {
+        let ret = await User.logout(id);
+        console.log('ret', ret);
+        if(ret.success){
+          this.UPDATE_LOGOUT();
+          this.$router.push('/');
+          this.$setItem('logged', false);
+        }
+      } catch (e) {
+        console.log(e);
+      }
     }
+  },
+  async created() {
+    let log = await this.$getItem('logged');
+    this.UPDATE_STATUS(log)
+    let userInfo = await this.$getItem('userInfo');
+    this.UPDATE_USER(userInfo);
   }
 };
 </script>

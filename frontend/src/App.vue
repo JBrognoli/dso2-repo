@@ -1,41 +1,42 @@
 <template>
   <v-app>
-    <TheToolbar />
+    <TheToolbar/>
     <TheNavDrawer></TheNavDrawer>
     <v-layout>
       <v-content>
-        <router-view />
+        <router-view/>
       </v-content>
     </v-layout>
-    <BaseSnackbar />
+    <BaseSnackbar/>
   </v-app>
 </template>
 
 <script>
-import TheToolbar from "./components/TheToolbar";
-import BaseSnackbar from "./components/BaseSnackbar";
-import TheNavDrawer from "./components/TheNavDrawer";
+  import {mapMutations} from 'vuex';
+  import TheToolbar from "./components/TheToolbar";
+  import BaseSnackbar from "./components/BaseSnackbar";
+  import TheNavDrawer from "./components/TheNavDrawer";
 
-export default {
-  name: "App",
-  components: {
-    TheToolbar,
-    BaseSnackbar,
-    TheNavDrawer
-  },
-  data: () => ({
-    login: {
-      email: "",
-      password: ""
+  export default {
+    name: "App",
+    components: {
+      TheToolbar,
+      BaseSnackbar,
+      TheNavDrawer
     },
-    showPassword: false,
-    loginFormValid: ""
-  })
-};
+    data: () => ({
+      login: {
+        email: "",
+        password: ""
+      },
+      showPassword: false,
+      loginFormValid: ""
+    }),
+  };
 </script>
 
 <style scoped>
-.imageOpacity {
-  opacity: 1;
-}
+  .imageOpacity {
+    opacity: 1;
+  }
 </style>

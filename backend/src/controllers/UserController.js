@@ -6,14 +6,14 @@ module.exports = {
 
     const emailAlreadyUsed = await User.findOne({ email: email });
     if (emailAlreadyUsed) {
-      return res.json(userExists);
+      return res.json({userExists, "success": true});
     }
 
     User.create({ email, password }, function(err, user) {
       if (err) {
-        console.log("err", err);
+        return res.json({"success": false})
       } else {
-        return res.json(user);
+        return res.json({user, "success": true});
       }
     });
   },
@@ -22,9 +22,9 @@ module.exports = {
     const { id } = req.params;
     User.find({ _id: id }, null, { lean: true }, function(err, user) {
       if (err) {
-        console.log("err", err);
+        return res.json({"success": false})
       } else {
-        return res.json(user);
+        return res.json({user, "success": true});
       }
     });
   },
@@ -32,9 +32,9 @@ module.exports = {
   readAll(req, res) {
     User.find({}, null, { lean: true }, function(err, user) {
       if (err) {
-        console.log("err", err);
+        return res.json({"success": false})
       } else {
-        return res.json(user);
+        return res.json({user, "success": true});
       }
     });
   },
@@ -46,9 +46,9 @@ module.exports = {
       user
     ) {
       if (err) {
-        console.log("err", err);
+        return res.json({"success": false})
       } else {
-        return res.json(user);
+        return res.json({user, "success": true});
       }
     });
   },
@@ -58,9 +58,33 @@ module.exports = {
 
     User.findByIdAndRemove(id, function(err, user) {
       if(err) {
-        console.log('err', err);
+        return res.json({"success": false})
       } else {
-        return res.json(user);
+        return res.json({user, "success": true});
+      }
+    })
+  },
+
+  login(req, res) {
+    const { email, password } = req.body;
+
+    User.findOne({email: email, password: password}, function (err, user) {
+      if(err) {
+        return res.json({"success": false})
+      } else {
+        return res.json({user, "success": true})
+      }
+    })
+  },
+  
+  logout(req, res) {
+    const id = req.params;
+
+    User.find(id, {}, function (err, user) {
+      if(err) {
+        return res.json({"success": false})
+      } else {
+        return res.json({user, "success": true})
       }
     })
   }
