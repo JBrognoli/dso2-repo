@@ -102,7 +102,7 @@ export default {
     }
   }),
   methods: {
-    ...mapMutations("user", ["UPDATE_BASE_SNACKBAR"]),
+    ...mapMutations("user", ["UPDATE_BASE_SNACKBAR", 'UPDATE_LOGGED']),
     handleRegister() {
       this.UPDATE_BASE_SNACKBAR({
         open: true,
@@ -111,11 +111,13 @@ export default {
       this.menu = false;
     },
     handleLogin() {
+      this.UPDATE_LOGGED();
       this.UPDATE_BASE_SNACKBAR({
         open: true,
         text: "Usuário logado com sucesso"
       });
       this.menu = false;
+      this.$router.replace('/userHome')
     }
   }
 };

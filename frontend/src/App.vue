@@ -1,40 +1,35 @@
 <template>
   <v-app>
     <TheToolbar />
-
-<!--    <v-img-->
-<!--      src="./assets/spread-dollars.jpg"-->
-<!--      lazy-src="https://picsum.photos/id/11/10/6"-->
-<!--      aspect-ratio="1"-->
-<!--      class="grey lighten-2 imageOpacity"-->
-<!--      max-height="100vh"-->
-<!--      max-width="100vw"-->
-<!--    >-->
+    <TheNavDrawer></TheNavDrawer>
+    <v-layout>
       <v-content>
         <router-view />
       </v-content>
-<!--    </v-img>-->
+    </v-layout>
     <BaseSnackbar />
   </v-app>
 </template>
 
 <script>
-  import TheToolbar from './components/TheToolbar'
-  import BaseSnackbar from './components/BaseSnackbar'
+import TheToolbar from "./components/TheToolbar";
+import BaseSnackbar from "./components/BaseSnackbar";
+import TheNavDrawer from "./components/TheNavDrawer";
 
 export default {
   name: "App",
   components: {
     TheToolbar,
-    BaseSnackbar
+    BaseSnackbar,
+    TheNavDrawer
   },
   data: () => ({
     login: {
-      email: '',
-      password: ''
+      email: "",
+      password: ""
     },
     showPassword: false,
-    loginFormValid: '',
+    loginFormValid: ""
   })
 };
 </script>

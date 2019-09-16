@@ -1,6 +1,6 @@
 <template>
   <v-flex >
-    <v-card width="70%" elevation="10" class="mx-auto">
+    <v-card width="60%" elevation="10" class="mx-auto">
       <v-carousel :cycle="cycle" :show-arrows="false" height="450px">
         <v-carousel-item v-for="(item, index) in items" :key="index">
           <v-list two-line>
