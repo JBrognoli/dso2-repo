@@ -60,6 +60,7 @@ export default {
           this.UPDATE_LOGOUT();
           this.$router.push('/');
           this.$setItem('logged', false);
+          this.$setItem('userInfo', {});
         }
       } catch (e) {
         console.log(e);

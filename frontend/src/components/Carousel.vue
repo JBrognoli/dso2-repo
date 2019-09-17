@@ -56,6 +56,7 @@
 </template>
 <script>
   import User from '../services/user'
+  import {mapMutations} from 'vuex';
 
 export default {
   name: "Carrousel",
@@ -96,14 +97,22 @@ export default {
     }
   },
   methods: {
+    ...mapMutations('user', ['UPDATE_BASE_SNACKBAR']),
     async buyItem(itemId) {
-      const userInfo = await this.$getItem('userInfo');
-      const userId = userInfo._id;
       try {
+        const userInfo = await this.$getItem('userInfo');
+        const userId = userInfo._id;
         let ret = await User.buyItem(userId, itemId);
         console.log('ret buy', ret);
+        this.UPDATE_BASE_SNACKBAR({
+          open:true,
+          text: 'Sua compra foi efetuada com sucesso.'
+        })
       } catch (e) {
-        console.log('err', e);
+        this.UPDATE_BASE_SNACKBAR({
+          open:true,
+          text: 'Não foi possível efetuar sua compra.'
+        })
       }
     }
   }
