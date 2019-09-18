@@ -56,9 +56,9 @@ export default {
   computed: {
     ...mapState('user', ['userInfo']),
   },
-  // async created() {
-  //   this.user = await this.$getItem('userInfo')
-  // },
+  async created() {
+    this.user = await this.$getItem('userInfo');
+  },
   methods: {
     ...mapMutations('user', ['UPDATE_BASE_SNACKBAR']),
     async handleUpdate() {

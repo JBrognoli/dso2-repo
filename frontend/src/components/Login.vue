@@ -107,7 +107,8 @@ export default {
     async handleRegister() {
       try {
         let ret = await Open.createUser(this.register.form);
-        if(ret.sucess) {
+        console.log('registry', ret)  
+        if(ret.success) {
           this.UPDATE_BASE_SNACKBAR({
             open: true,
             text: "Usuário criado com sucesso"
@@ -117,7 +118,7 @@ export default {
           this.UPDATE_BASE_SNACKBAR({
             open: true,
             text: "Erro, email ou senha incorretos."
-          });
+          }); 
         }
       } catch (e) {
         console.log('error', e)

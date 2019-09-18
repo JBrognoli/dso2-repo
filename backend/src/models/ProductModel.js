@@ -29,4 +29,9 @@ const ProductSchema = new Schema({
     type: Schema.Types.String
   }
 });
+
+ProductSchema.pre('find', function() {
+  this.populate('owner');
+})
+
 module.exports = mongoose.model("Product", ProductSchema);

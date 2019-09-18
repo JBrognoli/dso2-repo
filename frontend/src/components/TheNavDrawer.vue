@@ -2,7 +2,7 @@
   <v-navigation-drawer :value="navDrawer" app clipped>
     <v-list-item>
       <v-list-item-content>
-        <v-list-item-title class="title">{{ userName }}</v-list-item-title>
+        <v-list-item-title class="title">{{(userName || userEmail)}}</v-list-item-title>
         <v-list-item-subtitle>profile</v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
@@ -40,6 +40,7 @@
     components: {},
     data: () => ({
       userName: '',
+      userEmail: '',
     }),
     computed: {
       ...mapState("user", ["navDrawer", "userInfo"]),
@@ -55,9 +56,10 @@
     async created() {
       let userInfo = await this.$getItem('userInfo');
       if (userInfo) {
-        this.userName = userInfo.email
+        this.userName = userInfo.name
+        this.userEmail = userInfo.userEmail
       } else {
-        this.userName = "usuario@email.com"
+        this.userEmail = "usuario@email.com"
       }
     }
   };
