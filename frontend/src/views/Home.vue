@@ -19,13 +19,11 @@
               :unities="baseCard.unities"
               :sellerName="baseCard.sellerName"
               :sellerPhoto="baseCard.sellerPhoto"
+              :id="baseCard._id"
             ></BaseCard>
           </ul>
         </v-layout>
       </v-flex>
-      <!-- <v-btn class="ml-3" fab>
-        <v-icon dark x-large>mdi-arrow-right-bold</v-icon>
-      </v-btn> -->
     </v-layout>
   </v-container>
 </template>
@@ -42,42 +40,7 @@ export default {
     BaseCard
   },
   data: () => ({
-    baseCards: [
-      {
-        sellerName: "Test1",
-        sellerPhoto:
-          "https://i.kym-cdn.com/entries/icons/facebook/000/000/763/Dibujo.jpg",
-        id: "1",
-        name: "Product name 1",
-        description: "Product description 1",
-        publishedAt: "13/09/2019",
-        price: '399.99',
-        image: "https://picsum.photos/id/11/500/300"
-      },
-      {
-        sellerName: "test2",
-        sellerPhoto:
-          "https://i.kym-cdn.com/entries/icons/facebook/000/000/763/Dibujo.jpg",
-        id: "2",
-        name: "Product name 2",
-        description: "Product description 2",
-        publishedAt: "12/09/2019",
-        price: '575.00',
-        image:
-          "https://cdn0.tnwcdn.com/wp-content/blogs.dir/1/files/2018/05/Wyvern-programming-languages-in-one.jpg"
-      },
-      {
-        sellerName: "Teste Testante",
-        sellerPhoto: "",
-        id: "3",
-        name: "Product name 3",
-        description: "Product description 3",
-        publishedAt: "11/09/2019",
-        price: '123.00',
-        image:
-          "https://cdn0.tnwcdn.com/wp-content/blogs.dir/1/files/2018/05/Wyvern-programming-languages-in-one.jpg"
-      }
-    ]
+    baseCards: []
   }),
   async created() {
     try {

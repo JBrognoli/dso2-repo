@@ -1,18 +1,21 @@
 <template>
-  <v-flex >
+  <v-flex>
     <v-card width="60%" elevation="10" class="mx-auto">
       <v-carousel :cycle="cycle" :show-arrows="false" height="450px">
         <v-carousel-item v-for="item in items" :key="item._id">
           <v-list two-line>
             <v-list-item>
               <v-list-item-avatar>
-                <v-img :src="item.owner.profilePhoto || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxc36HkPwSHSLpwROxkkDmhVtewIUD84Jd1WjTgiXSeInRIdFi'" />
+                <v-img
+                  :src="item.owner.profilePhoto || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxc36HkPwSHSLpwROxkkDmhVtewIUD84Jd1WjTgiXSeInRIdFi'"
+                />
               </v-list-item-avatar>
               <v-list-item-content>
                 <v-list-item-title>{{item.owner.name || item.owner.email}}</v-list-item-title>
                 <v-list-item-subtitle>Seller</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
+            <v-divider v-if="darkTheme" />
           </v-list>
           <v-layout>
             <v-flex xs9 md7 sm5 class="flex-grow-1">
@@ -27,10 +30,30 @@
               </v-layout>
             </v-flex>
             <v-flex xs3 md5 sm7>
-              <v-card flat color="white">
+              <v-card flat v-if="darkTheme">
                 <v-card-text>
                   <v-layout column>
-                    <span class="black--text caption mb-2">Novo - {{item.unities}} unidades</span>
+                    <span class="caption mb-2">New - {{item.unities}} unidades</span>
+                    <span class="title mb-4" style="line-height: 1">{{item.name}}</span>
+                    <span class="font-weight-medium mb-3">{{item.description}}</span>
+                    <span class="font-weight-medium mb-3">R$ {{item.price}}</span>
+                    <span class="font-weight-bold mb-2">
+                      <v-icon color="black" class="mr-1">mdi-credit-card-outline</v-icon>
+                      12 x R$ {{Math.round((item.price/12) * 100) / 100}} sem juros
+                    </span>
+                    <span class="font-weight-bold">
+                      <v-icon color="black" class="mr-2">mdi-truck-delivery</v-icon>Free Shipping
+                    </span>
+                  </v-layout>
+                </v-card-text>
+                <v-card-actions>
+                  <v-btn block @click="buyItem(item._id)">Comprar</v-btn>
+                </v-card-actions>
+              </v-card>
+              <v-card flat v-else color="white">
+                <v-card-text>
+                  <v-layout column>
+                    <span class="black--text caption mb-2">New - {{item.unities}} unidades</span>
                     <span class="black--text title mb-4" style="line-height: 1">{{item.name}}</span>
                     <span class="black--text font-weight-medium mb-3">{{item.description}}</span>
                     <span class="black--text font-weight-medium mb-3">R$ {{item.price}}</span>
@@ -38,8 +61,8 @@
                       <v-icon color="black" class="mr-1">mdi-credit-card-outline</v-icon>
                       12 x R$ {{Math.round((item.price/12) * 100) / 100}} sem juros
                     </span>
-                    <span class="black--text font-weight-bold">
-                      <v-icon color="black" class="mr-2">mdi-truck-delivery</v-icon>Frete grátis
+                    <span class="font-weight-bold black--text">
+                      <v-icon color="black" class="mr-2">mdi-truck-delivery</v-icon>Free Shipping
                     </span>
                   </v-layout>
                 </v-card-text>
@@ -55,8 +78,8 @@
   </v-flex>
 </template>
 <script>
-  import User from '../services/user'
-  import {mapMutations} from 'vuex';
+import User from "../services/user";
+import { mapMutations, mapState } from "vuex";
 
 export default {
   name: "Carrousel",
@@ -68,32 +91,38 @@ export default {
     try {
       let ret = await User.readAllProducts();
       this.items = ret.slice(-3);
-      console.log('ret carrouselreadprods', ret);
+      console.log("ret carrouselreadprods", ret);
     } catch (e) {
       this.UPDATE_BASE_SNACKBAR({
-          open: true,
-          text: 'Error on loading carrouselProducts'
-        })
+        open: true,
+        text: "Error on loading carrouselProducts"
+      });
     }
   },
   methods: {
-    ...mapMutations('user', ['UPDATE_BASE_SNACKBAR']),
+    ...mapMutations("user", ["UPDATE_BASE_SNACKBAR"]),
     async buyItem(itemId) {
       try {
-        const userInfo = await this.$getItem('userInfo');
+        const userInfo = await this.$getItem("userInfo");
         const userId = userInfo._id;
         let ret = await User.buyItem(userId, itemId);
-        console.log('ret buy', ret);
+        console.log("ret buy", ret);
         this.UPDATE_BASE_SNACKBAR({
           open: true,
-          text: 'Purchase confirmed'
-        })
+          text: "Purchase confirmed"
+        });
       } catch (e) {
         this.UPDATE_BASE_SNACKBAR({
           open: true,
-          text: 'Unable to make the purchase'
-        })
+          text: "Unable to make the purchase"
+        });
       }
+    }
+  },
+  computed: {
+    ...mapState("user", ["darkTheme"]),
+    color() {
+      return this.$store.state.user.darkTheme ? "" : "white";
     }
   }
 };

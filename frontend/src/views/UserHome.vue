@@ -1,7 +1,7 @@
 <template>
   <v-data-table :headers="headers" :items="products" sort-by="price" class="elevation-1">
     <template v-slot:top>
-      <v-toolbar flat color="white">
+      <v-toolbar flat >
         <v-toolbar-title>Products</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
         <div class="flex-grow-1"></div>
