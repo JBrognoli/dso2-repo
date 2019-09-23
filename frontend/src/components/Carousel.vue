@@ -6,10 +6,10 @@
           <v-list two-line>
             <v-list-item>
               <v-list-item-avatar>
-                <v-img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxc36HkPwSHSLpwROxkkDmhVtewIUD84Jd1WjTgiXSeInRIdFi" />
+                <v-img :src="item.owner.profilePhoto || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxc36HkPwSHSLpwROxkkDmhVtewIUD84Jd1WjTgiXSeInRIdFi'" />
               </v-list-item-avatar>
               <v-list-item-content>
-                <v-list-item-title>Vendedor Name</v-list-item-title>
+                <v-list-item-title>{{item.owner.name || item.owner.email}}</v-list-item-title>
                 <v-list-item-subtitle>Seller</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
@@ -30,7 +30,7 @@
               <v-card flat color="white">
                 <v-card-text>
                   <v-layout column>
-                    <span class="black--text caption mb-2">Novo - 50 unidades</span>
+                    <span class="black--text caption mb-2">Novo - {{item.unities}} unidades</span>
                     <span class="black--text title mb-4" style="line-height: 1">{{item.name}}</span>
                     <span class="black--text font-weight-medium mb-3">{{item.description}}</span>
                     <span class="black--text font-weight-medium mb-3">R$ {{item.price}}</span>
@@ -62,30 +62,7 @@ export default {
   name: "Carrousel",
   data: () => ({
     cycle: false,
-    items: [
-      {
-        sellerName: "Joao Brognoli",
-        sellerPhoto:
-          "https://i.kym-cdn.com/entries/icons/facebook/000/000/763/Dibujo.jpg",
-        id: "1",
-        name: "Product name 1",
-        description: "Product description 1",
-        publishedAt: "13/09/2019",
-        price: "399.99",
-        image: "https://picsum.photos/id/11/500/300"
-      },
-      {
-        sellerName: "Guilherme de Liz",
-        sellerPhoto: "",
-        id: "2",
-        name: "Product name 2",
-        description: "Product description 2",
-        publishedAt: "12/09/2019",
-        price: "575.00",
-        image:
-          "https://cdn0.tnwcdn.com/wp-content/blogs.dir/1/files/2018/05/Wyvern-programming-languages-in-one.jpg"
-      },
-    ]
+    items: []
   }),
   async created() {
     try {
@@ -93,7 +70,10 @@ export default {
       this.items = ret.slice(-3);
       console.log('ret carrouselreadprods', ret);
     } catch (e) {
-      console.log('errr', e)
+      this.UPDATE_BASE_SNACKBAR({
+          open: true,
+          text: 'Error on loading carrouselProducts'
+        })
     }
   },
   methods: {
@@ -105,13 +85,13 @@ export default {
         let ret = await User.buyItem(userId, itemId);
         console.log('ret buy', ret);
         this.UPDATE_BASE_SNACKBAR({
-          open:true,
-          text: 'Sua compra foi efetuada com sucesso.'
+          open: true,
+          text: 'Purchase confirmed'
         })
       } catch (e) {
         this.UPDATE_BASE_SNACKBAR({
-          open:true,
-          text: 'Não foi possível efetuar sua compra.'
+          open: true,
+          text: 'Unable to make the purchase'
         })
       }
     }

@@ -18,7 +18,7 @@ export default {
     return ret.data;
   },
 
-  async createdProduct(id, body) {
+  async createProduct(id, body) {
     let ret = await http.post(`/product/${id}`, body);
     return ret.data;
   },

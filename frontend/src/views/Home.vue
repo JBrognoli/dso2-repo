@@ -16,6 +16,7 @@
               :publishedAt="baseCard.publishedAt"
               :price="baseCard.price"
               :image="baseCard.image || 'https://images.unsplash.com/photo-1556740714-a8395b3bf30f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80'"
+              :unities="baseCard.unities"
               :sellerName="baseCard.sellerName"
               :sellerPhoto="baseCard.sellerPhoto"
             ></BaseCard>
@@ -50,7 +51,7 @@ export default {
         name: "Product name 1",
         description: "Product description 1",
         publishedAt: "13/09/2019",
-        price: 399.99,
+        price: '399.99',
         image: "https://picsum.photos/id/11/500/300"
       },
       {
@@ -61,7 +62,7 @@ export default {
         name: "Product name 2",
         description: "Product description 2",
         publishedAt: "12/09/2019",
-        price: 575.00,
+        price: '575.00',
         image:
           "https://cdn0.tnwcdn.com/wp-content/blogs.dir/1/files/2018/05/Wyvern-programming-languages-in-one.jpg"
       },
@@ -72,7 +73,7 @@ export default {
         name: "Product name 3",
         description: "Product description 3",
         publishedAt: "11/09/2019",
-        price: 123.00,
+        price: '123.00',
         image:
           "https://cdn0.tnwcdn.com/wp-content/blogs.dir/1/files/2018/05/Wyvern-programming-languages-in-one.jpg"
       }
@@ -80,20 +81,12 @@ export default {
   }),
   async created() {
     try {
-      let ret = await Open.readAllUsers();
-      console.log('ret readAll', ret);
-
-      let r = await User.readAllProducts();
-      this.baseCards = r;
+      let ret = await User.readAllProducts();
+      console.log('ret readPRODUCS', ret);
+      this.baseCards = ret;
     } catch (e) {
       console.log('error readAll', e)
     }
-    // try {
-    //   let ret = await User.readAllProducts();
-    //   console.log('ret readPRODUCS', ret);
-    // } catch (e) {
-    //   console.log('errr', e)
-    // }
   }
 };
 </script>

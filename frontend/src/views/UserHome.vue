@@ -13,7 +13,6 @@
             <v-card-title style="background-color: #212121">
               <span class="headline white--text">{{ formTitle }}</span>
             </v-card-title>
-
             <v-card-text>
               <v-container>
                 <v-row>
@@ -36,6 +35,13 @@
                       v-model="editedItem.description"
                       label="Description"
                       prepend-icon="mdi-pencil"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="12" md="12">
+                    <v-text-field
+                      v-model="editedItem.unities"
+                      label="Unities"
+                      prepend-icon="mdi-cart-plus"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="12" md="12">
@@ -71,6 +77,7 @@
 <script>
   import User from '../services/user'
   import Open from '../services/open'
+  import { mapMutations } from 'vuex'
 
   export default {
     name: "UserHome",
@@ -85,8 +92,8 @@
           value: "name"
         },
         {text: "Price", value: "price", align: "left"},
+        {text: "Unities", value: "unities", align: "left"},
         {text: "Description", value: "description"},
-        // {text: "Image URL", value: "image"},
         {text: "Actions", value: "action", sortable: false}
       ],
       products: [],
@@ -95,13 +102,15 @@
         name: "",
         price: "",
         description: "",
+        unities: "",
         image: ""
       },
       defaultItem: {
         name: "",
         price: "",
         description: "",
-        imageURL: ""
+        unities: "",
+        image: ""
       }
     }),
     computed: {
@@ -128,6 +137,7 @@
     },
 
     methods: {
+      ...mapMutations('user', ['UPDATE_BASE_SNACKBAR']),
       initialize(ret) {
         this.products = ret;
       },
@@ -140,15 +150,21 @@
 
       async deleteItem(item) {
         const index = this.products.indexOf(item);
-        console.log('item', item)
         try {
           let ret = await User.deleteItem(item._id);
-          console.log('retDelete', ret)
+          if(ret.success) {
+            this.UPDATE_BASE_SNACKBAR({
+            open: true,
+            text: 'Item was deleted'
+          })
+          this.products.splice(index, 1);
+          }
         } catch(e) {
-          console.log(e);
-        }
-        confirm("Are you sure you want to delete this product?") &&
-        this.products.splice(index, 1);
+          this.UPDATE_BASE_SNACKBAR({
+            open: true,
+            text: 'Unable to delete the item'
+          })
+        }      
       },
 
       close() {
@@ -174,8 +190,10 @@
           console.log(this.editedItem);
           const userInfo = await this.$getItem('userInfo');
           const id = userInfo._id;
+          console.log('ret sendingIt', this.editedItem)
           try {
-            let ret = await User.createdProduct(id, this.editedItem);
+            let ret = await User.createProduct(id, this.editedItem);
+            await this.$setItem('userInfo', ret)
             console.log('retProd', ret)
             this.products.push(this.editedItem);
           } catch (e) {

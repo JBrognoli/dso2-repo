@@ -12,7 +12,7 @@
 </template>
 
 <script>
-  import {mapMutations} from 'vuex';
+  import {mapState, mapMutations} from 'vuex';
   import TheToolbar from "./components/TheToolbar";
   import BaseSnackbar from "./components/BaseSnackbar";
   import TheNavDrawer from "./components/TheNavDrawer";
@@ -32,6 +32,19 @@
       showPassword: false,
       loginFormValid: ""
     }),
+    async created() {
+      const darkThemeForage = await this.$getItem('darkTheme');
+      darkThemeForage ? this.UPDATE_THEME(darkThemeForage) : '';
+      this.$vuetify.theme.dark = this.dark
+    },
+    computed: {
+      dark() {
+        return this.$store.state.user.darkTheme
+      }
+    },
+    methods: {
+      ...mapMutations('user', ['UPDATE_THEME'])
+    }
   };
 </script>
 

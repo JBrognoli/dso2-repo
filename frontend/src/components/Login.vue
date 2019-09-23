@@ -3,7 +3,7 @@
     <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-y>
       <template v-slot:activator="{ on }">
         <v-btn text v-on="on">
-          <span class="mr-2">Log In</span>
+          <span class="mr-2">Enter</span>
           <v-icon>mdi-login</v-icon>
         </v-btn>
       </template>
@@ -56,7 +56,6 @@
                     :append-icon="login.showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                     :type="login.showPassword ? 'text' : 'password'"
                     label="Password"
-                    hint="At least 8 characters"
                     @click:append="login.showPassword = !login.showPassword"
                   ></v-text-field>
                 </v-form>
@@ -86,7 +85,7 @@ export default {
     menu: false,
     login: {
       form: {
-        email: "teste@hotmail.com",
+        email: "brog@hot.com",
         password: "123"
       },
       showPassword: false,
@@ -102,6 +101,7 @@ export default {
       lazy: false
     }
   }),
+  
   methods: {
     ...mapMutations("user", ["UPDATE_BASE_SNACKBAR", 'UPDATE_LOGIN', 'UPDATE_USER']),
     async handleRegister() {
@@ -114,36 +114,40 @@ export default {
             text: "Usuário criado com sucesso"
           });
           this.menu = false;
-        } else {
-          this.UPDATE_BASE_SNACKBAR({
-            open: true,
-            text: "Erro, email ou senha incorretos."
-          }); 
+        
         }
       } catch (e) {
-        console.log('error', e)
+       this.UPDATE_BASE_SNACKBAR({
+            open: true,
+            text: "Erro, não foi possível cadastrar."
+          }); 
       }
     },
+
     async handleLogin() {
       try {
         let ret = await Open.logIn(this.login.form);
-        console.log(ret)
-        if(ret.success) {
-          this.$setItem('userInfo', ret.user)
-          this.$setItem('logged', true)
+        console.log('ret handleLogin', ret)
+        if(ret.success || ret.user) {
+          await this.$setItem('userInfo', ret.user)
+          await this.$setItem('logged', true)
+          await this.$setItem('darkTheme', false);
           this.UPDATE_LOGIN();
-          this.UPDATE_USER(ret.data);
+          this.UPDATE_USER(ret.user);
           this.UPDATE_BASE_SNACKBAR({
             open: true,
             text: "Usuário logado com sucesso"
           });
           this.menu = false;
-          this.$router.push('/userHome')
+          this.$router.push('/userHome', () => {})
         } else {
           console.log('ret error', ret)
         }
       } catch (e) {
-        console.log('error', e)
+        this.UPDATE_BASE_SNACKBAR({
+            open: true,
+            text: "Erro, email ou senha incorretos."
+          }); 
       }
     }
   }

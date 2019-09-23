@@ -17,13 +17,13 @@
           <v-card flat color="white">
             <v-card-text>
               <v-layout column>
-                <span class="black--text overline mb-2">Novo - 50 unidades</span>
+                <span class="black--text overline mb-2">Novo - {{unities}} unidades</span>
                 <span class="black--text caption mb-4" style="line-height: 1">{{ name }}</span>
                 <span class="black--text font-weight-medium overline mb-3">{{ description }}</span>
                 <span class="black--text font-weight-medium overline mb-3">R$ {{ price }}</span>
                 <span class="black--text font-weight-bold overline mb-2">
                   <v-icon color="black" class="mr-1" small>mdi-credit-card-outline</v-icon>
-                  12 x R$ {{Math.round((price/12) * 100) / 100}} sem juros
+                  12 x R$ {{Math.round((price/12) * 100.0) / 100}} sem juros
                 </span>
                 <span class="black--text font-weight-bold">
                   <v-icon color="black" class="mr-2" small>mdi-truck-delivery</v-icon>Frete grátis
@@ -59,12 +59,16 @@ export default {
       default: ""
     },
     price: {
-      type: Number,
+      type: String,
       default: ""
     },
     image: {
       type: String,
       default: ""
+    },
+    unities: {
+      type: String,
+      default: "1"
     },
     sellerName: {
       type: String,

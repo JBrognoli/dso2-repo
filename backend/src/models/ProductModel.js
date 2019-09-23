@@ -8,7 +8,7 @@ const ProductSchema = new Schema({
     required: "Name is required"
   },
   price: {
-    type: Schema.Types.Number,
+    type: Schema.Types.String,
     required: "Order is required",
   },
   description: {

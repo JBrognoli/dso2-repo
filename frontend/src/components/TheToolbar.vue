@@ -1,6 +1,6 @@
 <template>
   <v-app-bar app clipped-left>
-    <v-app-bar-nav-icon v-if="logged" @click="handleDrawer"></v-app-bar-nav-icon>
+    <v-app-bar-nav-icon v-if="logged" @click.stop="handleDrawer"></v-app-bar-nav-icon>
     <v-btn text @click="handleLogo">
       <v-toolbar-title class="headline text-uppercase">
         <span>Free</span>
@@ -58,7 +58,7 @@ export default {
         console.log('ret', ret);
         if(ret.success){
           this.UPDATE_LOGOUT();
-          this.$router.push('/');
+          this.$router.replace('/', () => {});
           this.$setItem('logged', false);
           this.$setItem('userInfo', {});
         }
@@ -69,9 +69,9 @@ export default {
   },
   async created() {
     let log = await this.$getItem('logged');
-    this.UPDATE_STATUS(log)
+    log ? this.UPDATE_STATUS(log) : ''
     let userInfo = await this.$getItem('userInfo');
-    this.UPDATE_USER(userInfo);
+    userInfo ? this.UPDATE_USER(userInfo) : ''
   }
 };
 </script>

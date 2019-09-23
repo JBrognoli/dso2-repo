@@ -22,6 +22,10 @@ const UPDATE_USER = (state, payload) => {
   state.userInfo = payload;
 };
 
+const UPDATE_THEME = (state, payload) => {
+  state.darkTheme = payload;
+}
+
 
 export {
   UPDATE_BASE_SNACKBAR,
@@ -29,5 +33,6 @@ export {
   UPDATE_LOGOUT,
   UPDATE_LOGIN,
   UPDATE_STATUS,
-  UPDATE_USER
+  UPDATE_USER,
+  UPDATE_THEME
 }

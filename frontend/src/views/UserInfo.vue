@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-layout class="align-center justify-center">
-      <v-card max-width="800px" elevation="0">
+      <v-card max-width="800px" elevation="10">
         <v-card-title>Editar Perfil</v-card-title>
         <v-divider class="mx-4"></v-divider>
         <v-card-text>
@@ -27,8 +27,8 @@
           <v-container>
             <v-layout class>
               <div class="flex-grow-1"></div>
-              <v-btn min-width="200px" style="background-color: #212121">
-                <span class="white--text" @click="handleUpdate">Salvar</span>
+              <v-btn min-width="200px" style="background-color: #212121" @click="handleUpdate">
+                <span class="white--text">Salvar</span>
               </v-btn>
             </v-layout>
           </v-container>
@@ -61,20 +61,22 @@ export default {
   },
   methods: {
     ...mapMutations('user', ['UPDATE_BASE_SNACKBAR']),
+
+    
     async handleUpdate() {
       const userInfo = await this.$getItem('userInfo');
       const id = userInfo._id;
-      console.log('updaadada', this.user)
-      console.log('idddd', id);
+      console.log('Update User Sent', this.user)
+      console.log('User Id', id);
       try {
         let ret = await User.updateUser(id, this.user);
         if(ret.success) {
           this.UPDATE_BASE_SNACKBAR({
             open: true,
-            text: 'Alteração feita com sucesso.'
+            text: 'Your change was successful'
           })
+          await this.$setItem('userInfo', ret.user);
         }
-        console.log('reeetUpd', ret);
       } catch (e) {
         console.log('eerrr', e);
       }

@@ -3,6 +3,7 @@ export default {
   // User Settings
 
   logged: false,
+  darkTheme: false,
   userInfo: {
     name: '',
     email: '',

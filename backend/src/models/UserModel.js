@@ -36,4 +36,8 @@ UserSchema.pre('findOne', function () {
   this.populate('products');
 });
 
+UserSchema.pre('findOneAndUpdate', function() {
+  this.populate('products')
+})
+
 module.exports = mongoose.model('User', UserSchema);

@@ -2,11 +2,22 @@ const Product = require("../models/ProductModel");
 const User = require("../models/UserModel");
 
 module.exports = {
+  
   async create(req, res) {
+    console.log('reqparams', req.params);
+    console.log('reqbody', req.body);
+  
     const { id } = req.params;
-    const { name, price, description } = req.body;
-
-    Product.create({ name, price, description, owner: id }, function(err, product) {
+    const { name, price, description, image, unities } = req.body
+    const item = {
+      name,
+      price,
+      description,
+      owner: id,
+      image,
+      unities
+    }
+    Product.create(item, function(err, product) {
       if (err) {
         console.log("err", err);
       } else {  
@@ -98,7 +109,7 @@ module.exports = {
       if (err) {
         console.log("err", err);
       } else {
-        return res.json(product);
+        return res.json({product, success: true});
       }
     });
   }
