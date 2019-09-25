@@ -90,7 +90,7 @@ export default {
   async created() {
     try {
       let ret = await User.readAllProducts();
-      this.items = ret.slice(-3);
+      this.items = ret.slice(-3).reverse();
       console.log("ret carrouselreadprods", ret);
     } catch (e) {
       this.UPDATE_BASE_SNACKBAR({

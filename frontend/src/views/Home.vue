@@ -46,7 +46,10 @@ export default {
     try {
       let ret = await User.readAllProducts();
       console.log('ret readPRODUCS', ret);
-      this.baseCards = ret;
+      this.baseCards = ret.map(v => {
+        v.price = v.price + "";
+        return v
+      });
     } catch (e) {
       console.log('error readAll', e)
     }

@@ -29,15 +29,23 @@ const UserSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'Product'
     }],
+  },
+  buys: {
+    type: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Product'
+    }]
   }
 });
 
 UserSchema.pre('findOne', function () {
   this.populate('products');
+  this.populate('buys');
 });
 
 UserSchema.pre('findOneAndUpdate', function() {
   this.populate('products')
+  this.populate('buys')
 })
 
 module.exports = mongoose.model('User', UserSchema);

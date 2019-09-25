@@ -2,7 +2,7 @@
   <v-navigation-drawer :value="navDrawer" app clipped>
     <v-list-item>
       <v-list-item-content>
-        <v-list-item-title class="title">{{(userInfo.name ||userInfo.email)}}</v-list-item-title>
+        <v-list-item-title class="title">{{(userInfo.name || userInfo.email)}}</v-list-item-title>
         <v-list-item-subtitle>profile</v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>

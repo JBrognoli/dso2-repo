@@ -128,7 +128,7 @@ export default {
       try {
         let ret = await Open.logIn(this.login.form);
         console.log('ret handleLogin', ret)
-        if(ret.success || ret.user) {
+        if(ret.success && ret.user) {
           await this.$setItem('userInfo', ret.user)
           await this.$setItem('logged', true)
           await this.$setItem('darkTheme', false);
@@ -141,13 +141,16 @@ export default {
           this.menu = false;
           this.$router.push('/userHome', () => {})
         } else {
-          console.log('ret error', ret)
+          this.UPDATE_BASE_SNACKBAR({
+            open: true,
+            text: "Erro, email ou senha incorretos."
+          });
         }
       } catch (e) {
         this.UPDATE_BASE_SNACKBAR({
-            open: true,
-            text: "Erro, email ou senha incorretos."
-          }); 
+          open: true,
+          text: "Erro, email ou senha incorretos."
+        });
       }
     }
   }

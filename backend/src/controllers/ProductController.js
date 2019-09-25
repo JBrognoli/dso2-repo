@@ -50,7 +50,7 @@ module.exports = {
       } else {
         User.findOneAndUpdate(
           {_id: id },
-          {$push: { products: product._id.toString()}},
+          {$push: { buys: product._id.toString()}},
           { lean: true, new: true},
           function (err, user) {
             if(err) {
@@ -112,5 +112,5 @@ module.exports = {
         return res.json({product, success: true});
       }
     });
-  }
+  },
 };

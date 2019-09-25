@@ -70,7 +70,7 @@ module.exports = {
     const { email, password } = req.body;
     console.log("fodase", req.body);
     User.findOne({ email: email, password: password }, function(err, user) {
-      if (err) {
+      if (err && !user) {
         return res.json({ success: false });
       } else {
         return res.json({ user, success: true });

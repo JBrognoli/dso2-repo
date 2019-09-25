@@ -64,6 +64,9 @@
         </v-dialog>
       </v-toolbar>
     </template>
+    <template v-slot:item.bought="{ item }">
+      <v-icon v-if="item.bought" medium class="pl-3">mdi-cart-plus</v-icon>
+    </template>
     <template v-slot:item.action="{ item }">
       <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
       <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
@@ -94,6 +97,7 @@
         {text: "Price", value: "price", align: "left"},
         {text: "Unities", value: "unities", align: "left"},
         {text: "Description", value: "description"},
+        {text: 'Bought', value: 'bought', align: 'left', sortable: true},
         {text: "Actions", value: "action", sortable: false}
       ],
       products: [],
@@ -133,7 +137,10 @@
       }
       let ret = await Open.logIn(user);
       this.$setItem('userInfo', ret.user);
-      this.products = ret.user.products;
+      this.products = [...ret.user.products, ...ret.user.buys.map(v => {
+        v.bought = "Comprado"
+        return v
+      })];
     },
 
     methods: {
